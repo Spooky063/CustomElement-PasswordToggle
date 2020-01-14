@@ -1,6 +1,6 @@
 {
   "name": "@gastier/customelement-passwordtoggle",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Toggle password element",
   "main": "index.js",
   "module": "index.js",
