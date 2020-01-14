@@ -3,6 +3,11 @@
 ## About
 The goal of this module is to have a reusable component to toggle password from password type to text type.
 
+## Install
+```bash
+npm i @gastier/customelement-passwordtoggle
+```
+
 ## Usage
 To attach toggle button to input, use `input` attribute to list `name` password attribute.
 
