@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <meta name="theme-color" content="#ffffff">
+    <title>Custom Element - Password Toggle</title>
+    <script src="index.js" type="module" defer></script>
+</head>
+<body>
+    <main id="main-content">
+        <form action="" method="post">
+            <label for="username">Nom d'utilisateur :</label>
+            <input type="text" name="username" id="username">
+
+            <label for="password">Mot de passe :</label>
+            <input type="password" name="password" id="password" />
+            <password-toggle input="password" resolution-min="800"></password-toggle>
+        </form>
+
+        <form action="" method="post">
+            <label for="email">Email :</label>
+            <input type="email" name="email" id="email">
+
+            <label for="pwd">Mot de passe :</label>
+            <input type="password" name="pwd" id="pwd" />
+
+            <label for="confirm">Confirm :</label>
+            <input type="password" name="confirm" id="confirm" />
+            <password-toggle input="pwd,confirm"></password-toggle>
+        </form>
+    </main>
+</body>
+</html>
