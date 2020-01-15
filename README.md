@@ -2,8 +2,9 @@
 
 [![npm](https://img.shields.io/npm/v/@gastier/customelement-passwordtoggle.svg)](http://npm.im/@gastier/customelement-passwordtoggle)
 
-## About
 The goal of this module is to have a reusable component to toggle password from password type to text type.
+
+* [Demo](https://spooky063.github.io/CustomElement-PasswordToggle/)
 
 ## Install
 ```bash

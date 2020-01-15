@@ -7,13 +7,13 @@
         <style>
             .ce_show-hide {
                 display: inherit;
-            }
+    }
             button {
                 border: 0;
                 cursor: pointer;
                 background: transparent;
                 vertical-align: middle;
-            }
+    }
         </style>
         <div class="ce_show-hide">
         <button toggle>Show / Hide</button>
@@ -28,23 +28,34 @@
             this.shown = false;
             this.inputs = document.querySelectorAll('input[type=password]');
 
+            this.hasAttribute('input') || this.setAttribute('input', 'password');
+
             this.toggle = this.toggle.bind(this);
-            this.render = (this.resolutionMin !== undefined) ? this.isblocked(this.resolutionMin) : true;
-
-            if (this.render) {
-                this.attachShadow({mode: 'open'});
-                this.shadowRoot.appendChild(div.content.cloneNode(true));
-
-                this.toggleBtn = this.shadowRoot.querySelector('[toggle]');
-                this.toggleBtn.innerHTML = eye_close;
-            }
         }
 
         connectedCallback()
         {
-            if (this.toggleBtn) {
-                this.toggleBtn.addEventListener('click', this.toggle);
+            try {
+                this.input.some(name => {
+                    if (!this.isInputExist(name)) {
+                        throw `Password input attribute "${name}" name does not exist on this page.`;
+                    }
+                });
+            } catch (e) {
+                console.log(e);
+                return false;
             }
+
+            if (this.resolutionMin !== undefined && this.isBlocked(this.resolutionMin)) {
+                return false;
+            }
+
+            this.attachShadow({mode: 'open'});
+            this.shadowRoot.appendChild(div.content.cloneNode(true));
+
+            this.toggleBtn = this.shadowRoot.querySelector('[toggle]');
+            this.toggleBtn.innerHTML = eye_close;
+            this.toggleBtn.addEventListener('click', this.toggle);
         }
 
         disconnectedCallback()
@@ -66,9 +77,21 @@
 
         get resolutionMin()
         {
-            return this.getAttribute('resolution-min');
+            return parseInt(this.getAttribute('resolution-min'), 10) || undefined;
         }
 
+        /**
+         * Change the input linked to custom element.
+         * @param {string} value
+         */
+        set input(value)
+        {
+            this.setAttribute('input', value);
+        }
+
+        /**
+         * Toogle icon and input type.
+         */
         toggle()
         {
             this.shown = !this.shown;
@@ -81,9 +104,26 @@
             });
         }
 
-        isblocked(min)
+        /**
+         * Check if name attribute exist in all input of password type.
+         * @param {string[]} name Name attribute of password input.
+         * @returns {number} The number of input[type=password] element found for the name passed in parameter.
+         */
+        isInputExist(name)
         {
-            return (window.screen.width >= min);
+            return Array.from(this.inputs)
+                .filter(n => n.getAttribute('name').includes(name))
+                .length;
+        }
+
+        /**
+         * Check if resolution is higher than attribute passed by user.
+         * @param {number} min Resolution minimal for render the custom element.
+         * @returns {boolean}
+         */
+        isBlocked(min)
+        {
+            return Math.max(document.documentElement.clientWidth, window.innerWidth || 0) <= min;
         }
     }
 
